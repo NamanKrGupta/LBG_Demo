@@ -13,7 +13,6 @@ struct MovieRowView: View {
                         image.resizable()
                              .aspectRatio(contentMode: .fill)
                              .frame(width: 60, height: 90)
-                             .cornerRadius(8)
                              .clipped()
                     case .failure(_):
                         Color.red.frame(width: 60, height: 90)
@@ -23,17 +22,19 @@ struct MovieRowView: View {
                         EmptyView()
                     }
                 }
+                .cornerRadius(8)
             } else {
                 Color.gray.frame(width: 60, height: 90)
+                    .cornerRadius(8)
             }
 
             VStack(alignment: .leading) {
-                Text(movie.title)
+                Text(movie.title ?? Constants.notAvailable)
                     .font(.headline)
-                Text("Year: \(movie.year)")
+                Text("\(Constants.year): \(movie.year ?? Constants.notAvailableShort)")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
-                Text("Runtime: \(movie.runtime)")
+                Text("\(Constants.runtime): \(movie.runtime ?? Constants.notAvailableShort)")
                     .font(.caption)
                     .foregroundColor(.secondary)
             }

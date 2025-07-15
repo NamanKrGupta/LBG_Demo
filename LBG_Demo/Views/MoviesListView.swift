@@ -7,9 +7,9 @@ struct MoviesListView: View {
         NavigationView {
             Group {
                 if viewModel.isLoading {
-                    ProgressView("Loading movies...")
+                    ProgressView(Constants.loadingMovies)
                 } else if let error = viewModel.errorMessage {
-                    Text("Error: \(error)")
+                    Text("\(Constants.error): \(error)")
                         .foregroundColor(.red)
                 } else {
                     List(viewModel.movies) { movie in
@@ -20,7 +20,7 @@ struct MoviesListView: View {
                     .listStyle(.plain)
                 }
             }
-            .navigationTitle("Movies")
+            .navigationTitle(Constants.ScreenNames.moviesList)
             .task {
                 await viewModel.fetchMovies()
             }

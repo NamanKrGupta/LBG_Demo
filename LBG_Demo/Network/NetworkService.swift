@@ -6,10 +6,9 @@ protocol MovieServiceProtocol {
 
 class NetworkService: MovieServiceProtocol {
     func fetchMovies() async throws -> [Movie] {
-        guard let url = URL(string: "https://my-json-server.typicode.com/horizon-code-academy/fake-movies-api/movies") else {
+        guard let url = URL(string: "\(NetworkConstants.baseUrl)/fake-movies-api/movies") else {
             throw URLError(.badURL)
         }
-
         let (data, _) = try await URLSession.shared.data(from: url)
         return try JSONDecoder().decode([Movie].self, from: data)
     }

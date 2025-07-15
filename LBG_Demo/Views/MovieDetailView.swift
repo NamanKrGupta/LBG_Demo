@@ -6,7 +6,7 @@ struct MovieDetailView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
-                if let posterString = viewModel.movie.poster,
+                if let posterString = viewModel.movie?.poster,
                    let posterURL = URL(string: posterString) {
                     AsyncImage(url: posterURL) { phase in
                         switch phase {
@@ -22,19 +22,21 @@ struct MovieDetailView: View {
                         }
                     }
                     .frame(maxWidth: .infinity)
+                    .cornerRadius(8)
                 } else {
                     Color.gray.frame(height: 250)
+                        .cornerRadius(8)
                 }
 
-                Text(viewModel.movie.title)
+                Text(viewModel.movie?.title ?? Constants.notAvailableShort)
                     .font(.title)
                     .padding(.top)
 
-                Text(viewModel.movie.year)
+                Text(viewModel.movie?.year ?? Constants.notAvailableShort)
                     .padding(.top, 8)
             }
             .padding()
         }
-        .navigationTitle("Movie Details")
+        .navigationTitle(Constants.ScreenNames.movieDetails)
     }
 }

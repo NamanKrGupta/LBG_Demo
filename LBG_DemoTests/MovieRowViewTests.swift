@@ -3,7 +3,6 @@ import SwiftUI
 import ViewInspector
 @testable import LBG_Demo
 
-@MainActor
 final class MovieRowViewTests: XCTestCase {
 
     func testMovieRowDisplaysCorrectText() throws {

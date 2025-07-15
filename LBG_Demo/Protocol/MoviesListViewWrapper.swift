@@ -7,20 +7,20 @@ struct MoviesListViewWrapper: View {
         NavigationView {
             Group {
                 if viewModel.isLoading {
-                    ProgressView("Loading movies...")
+                    ProgressView(Constants.loadingMovies)
                 } else if let error = viewModel.errorMessage {
-                    Text("Error: \(error)")
+                    Text("\(Constants.error): \(error)")
                         .foregroundColor(.red)
                 } else {
                     List(viewModel.movies) { movie in
-                        NavigationLink(destination: Text("Details")) {
+                        NavigationLink(destination: Text(Constants.ScreenNames.details)) {
                             MovieRowView(movie: movie)
                         }
                     }
                     .listStyle(.plain)
                 }
             }
-            .navigationTitle("Movies")
+            .navigationTitle(Constants.ScreenNames.moviesList)
         }
     }
 }

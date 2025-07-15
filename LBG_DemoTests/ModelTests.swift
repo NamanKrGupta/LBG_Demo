@@ -46,7 +46,7 @@ final class MovieTests: XCTestCase {
         let badJSON = """
         [
             {
-                "Year": "2010",
+                "Year": 2010,
                 "Runtime": "148 min",
                 "Poster": "https://image.tmdb.org/t/p/w500/qmDpIHrmpJINaRKAfWQfftjCdyi.jpg"
             }

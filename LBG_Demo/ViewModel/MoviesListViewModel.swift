@@ -1,6 +1,5 @@
 import Foundation
 
-@MainActor
 class MoviesListViewModel: ObservableObject {
     @Published var movies: [Movie] = []
     @Published var isLoading: Bool = false
@@ -12,6 +11,7 @@ class MoviesListViewModel: ObservableObject {
         self.service = service
     }
 
+    @MainActor
     func fetchMovies() async {
         isLoading = true
         defer { isLoading = false }
@@ -20,14 +20,5 @@ class MoviesListViewModel: ObservableObject {
         } catch {
             errorMessage = error.localizedDescription
         }
-    }
-}
-
-@MainActor
-class MovieDetailViewModel: ObservableObject {
-    let movie: Movie
-
-    init(movie: Movie) {
-        self.movie = movie
     }
 }
