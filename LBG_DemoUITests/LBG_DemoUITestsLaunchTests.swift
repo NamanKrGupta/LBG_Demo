@@ -1,9 +1,3 @@
-//
-//  LBG_DemoUITestsLaunchTests.swift
-//  LBG_DemoUITests
-//
-//  Created by Yash Bansal on 09/07/25.
-//
 
 import XCTest
 
