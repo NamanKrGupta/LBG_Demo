@@ -1,7 +1,12 @@
 import SwiftUI
 
 struct MoviesListView: View {
-    @StateObject private var viewModel = MoviesListViewModel()
+    
+    @ObservedObject var viewModel: MoviesListViewModel
+    
+    init(viewModel: MoviesListViewModel = MoviesListViewModel()) {
+        self.viewModel = viewModel
+    }
 
     var body: some View {
         NavigationView {
@@ -21,8 +26,10 @@ struct MoviesListView: View {
                 }
             }
             .navigationTitle(Constants.ScreenNames.moviesList)
-            .task {
-                await viewModel.fetchMovies()
+            .onAppear {
+                Task {
+                    await viewModel.fetchMovies()
+                }
             }
         }
     }

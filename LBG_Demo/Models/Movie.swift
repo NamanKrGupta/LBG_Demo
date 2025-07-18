@@ -13,4 +13,9 @@ struct Movie: Identifiable, Codable, Hashable {
         case runtime = "Runtime"
         case poster = "Poster"
     }
+
+    var displayTitle: String? {
+        guard let title = title else { return nil }
+        return title.capitalized
+    }
 }

@@ -7,48 +7,44 @@ import ViewInspector
 final class MoviesListViewTests: XCTestCase {
 
     func testShowsLoadingState() throws {
-        let viewModel = MoviesListViewModelMock()
+        let viewModel = MoviesListViewModel()
         viewModel.isLoading = true
-        let view = MoviesListViewWrapper(viewModel: viewModel)
-
+        let view = MoviesListView(viewModel: viewModel)
         let progressView = try view.inspect()
             .navigationView()
             .group()
             .progressView(0)
-             
-
         let labelText = try progressView.labelView().text().string()
-        XCTAssertEqual(labelText, "Loading movies...")
-
+        XCTAssertEqual(labelText, Constants.loadingMovies)
     }
 
     func testShowsErrorState() throws {
-        let viewModel = MoviesListViewModelMock()
-        viewModel.errorMessage = "Failed to load"
-        let view = MoviesListViewWrapper(viewModel: viewModel)
+        let errorMessage = "Failed to load"
+        let viewModel = MoviesListViewModel()
+        viewModel.isLoading = false
+        viewModel.errorMessage = errorMessage
+        let view = MoviesListView(viewModel: viewModel)
         let text = try view.inspect()
             .navigationView()
             .group()
             .text(0) // Access the first Text view inside the Group
             .string()
-
-        XCTAssertEqual(text, "Error: Failed to load")
-
+        XCTAssertEqual(text, "\(Constants.error): \(errorMessage)")
     }
 
-    func testShowsMovieList() throws {
+    func testShowsMovieList() {
         let movie = Movie(title: "Interstellar", year: "2014", runtime: "169 min", poster: nil)
-        let viewModel = MoviesListViewModelMock()
+        let viewModel = MoviesListViewModel()
         viewModel.movies = [movie]
-        let view = MoviesListViewWrapper(viewModel: viewModel)
-
-        let list = try view.inspect()
-            .navigationView()
-            .group()
-            .find(ViewType.List.self)
-
-
-
+        let view = MoviesListView(viewModel: viewModel)
+        do {
+            let _ = try view.inspect()
+                .navigationView()
+                .group()
+                .find(ViewType.List.self)
+        } catch {
+            XCTFail("Should not throw, error")
+        }
     }
 }
 

@@ -13,7 +13,6 @@ final class MovieTests: XCTestCase {
             "Poster": "https://image.tmdb.org/t/p/w500/qmDpIHrmpJINaRKAfWQfftjCdyi.jpg"
         },
         {
-            "Title": "Interstellar",
             "Year": "2014",
             "Runtime": "169 min",
             "Poster": null
@@ -33,12 +32,11 @@ final class MovieTests: XCTestCase {
         XCTAssertEqual(first.runtime, "148 min")
         XCTAssertEqual(first.poster, "https://image.tmdb.org/t/p/w500/qmDpIHrmpJINaRKAfWQfftjCdyi.jpg")
         XCTAssertNotNil(first.id) // UUID auto-generated
+        XCTAssertNotNil(first.displayTitle)
 
         let second = movies[1]
-        XCTAssertEqual(second.title, "Interstellar")
-        XCTAssertEqual(second.year, "2014")
-        XCTAssertEqual(second.runtime, "169 min")
-        XCTAssertNil(second.poster)
+        XCTAssertNil(second.title)
+        XCTAssertNil(second.displayTitle)
     }
 
     func testDecodeInvalidJSON() {

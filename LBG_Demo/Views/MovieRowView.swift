@@ -29,7 +29,7 @@ struct MovieRowView: View {
             }
 
             VStack(alignment: .leading) {
-                Text(movie.title ?? Constants.notAvailable)
+                Text(movie.displayTitle ?? Constants.notAvailable)
                     .font(.headline)
                 Text("\(Constants.year): \(movie.year ?? Constants.notAvailableShort)")
                     .font(.subheadline)

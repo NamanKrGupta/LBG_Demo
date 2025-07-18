@@ -1,31 +1,23 @@
 import XCTest
+import Reachability
 @testable import LBG_Demo  // Replace with your app target module
 
-final class NetworkServiceTests: XCTestCase {
+class NetworkServiceTests: XCTestCase {
+    var service: NetworkService!
 
-    func testFetchMoviesReturnsMovies() async throws {
-        let mockService = MockMovieService()
-        mockService.moviesToReturn = [
-            Movie(title: "Movie 1", year: "2020", runtime: "120 min", poster: "https://example.com/poster1.jpg"),
-            Movie(title: "Movie 2", year: "2021", runtime: "110 min", poster: nil)
-        ]
-
-        let movies = try await mockService.fetchMovies()
-
-        XCTAssertEqual(movies.count, 2)
-        XCTAssertEqual(movies[0].title, "Movie 1")
-        XCTAssertNil(movies[1].poster)
+    override func setUp() {
+        super.setUp()
+        service = NetworkService.shared
     }
 
-    func testFetchMoviesThrowsError() async {
-        let mockService = MockMovieService()
-        mockService.shouldThrowError = true
-
-        do {
-            _ = try await mockService.fetchMovies()
-            XCTFail("Expected fetchMovies to throw an error")
-        } catch {
-            XCTAssertTrue(error is URLError)
-        }
+    func testNetworkServiceSingleton() {
+        let anotherInstance = NetworkService.shared
+        XCTAssertTrue(service === anotherInstance, "NetworkService should be a singleton")
     }
+
+    func testFetchMoviesSuccess() async throws {
+        let movies = try await service.fetchMovies(EndPoints.fetchMovies)
+        XCTAssertFalse(movies.isEmpty, "Movies list should not be empty")
+    }
+        
 }

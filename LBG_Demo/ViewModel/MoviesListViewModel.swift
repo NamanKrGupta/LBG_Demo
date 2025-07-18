@@ -5,18 +5,18 @@ class MoviesListViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
 
-    private let service: MovieServiceProtocol
-
-    init(service: MovieServiceProtocol = NetworkService()) {
+    let service: MovieServiceProtocol
+    
+    init(service: MovieServiceProtocol = NetworkService.shared) {
         self.service = service
     }
-
+    
     @MainActor
     func fetchMovies() async {
         isLoading = true
         defer { isLoading = false }
         do {
-            movies = try await service.fetchMovies()
+            movies = try await service.fetchMovies(EndPoints.fetchMovies)
         } catch {
             errorMessage = error.localizedDescription
         }
